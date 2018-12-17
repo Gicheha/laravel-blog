@@ -1,70 +1,57 @@
 @extends('layouts.master')
 
-@section('title')
-    Welcome Laravel Blog Tutorial
-@endsection
-
 @section('content')
-    <main role="main" class="container"  style="margin-top: 5px">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-8 blog-main">
-                <div class="blog-post">
-                    <h2 class="blog-post-title">Post One</h2>
-                    <p class="blog-post-meta"><small><i>December 23, 2013 by <a href="#">Jeremy</a></i></small></p>
+            <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Post <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Nav item again</a>
+                    </li>
+                </ul>
+            </nav>
 
-                    <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
-                    <blockquote>
-                        <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong>
-                            ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula
-                            ut id elit... <a href="" class="btn btn-primary btn-sm">Learn more</a> </p>
-                    </blockquote>
-                </div><!-- /.blog-post -->
-
-                <div class="blog-post">
-                    <h2 class="blog-post-title">Post Two</h2>
-                    <p class="blog-post-meta"><small><i>December 14, 2013 by <a href="#">Evans</a></i></small></p>
-
-                    <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                        Aenean lacinia bibendum nulla sed consectetur. Etiam porta
-                        euismod. Fusce dapibus... <a href="" class="btn btn-primary btn-sm">Learn more</a> </p>
-                </div><!-- /.blog-post -->
-
-                <nav class="blog-pagination">
-                    <a class="btn btn-outline-primary" href="#">Older</a>
-                    <a class="btn btn-outline-secondary disabled" href="#">Newer</a>
-                </nav>
-
-            </div><!-- /.blog-main -->
-
-            <aside class="col-sm-3 ml-sm-auto blog-sidebar">
-                <div class="sidebar-module">
-                    <h4>Latest Posts</h4>
-                    <ol class="list-unstyled">
-                        <li><a href="#">March 2017</a></li>
-                        <li><a href="#">February 2017</a></li>
-                        <li><a href="#">January 2017</a></li>
-                        <li><a href="#">December 2013</a></li>
-                        <li><a href="#">November 2013</a></li>
-                        <li><a href="#">October 2013</a></li>
-                        <li><a href="#">September 2013</a></li>
-                        <li><a href="#">August 2013</a></li>
-                        <li><a href="#">July 2013</a></li>
-                        <li><a href="#">June 2013</a></li>
-                        <li><a href="#">May 2013</a></li>
-                        <li><a href="#">April 2013</a></li>
-                    </ol>
+            <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+                <h1>Posts
+                    <a href="{{ route('post.form') }}">
+                        <button type="button" class="btn btn-primary btn-sm">Create Post</button>
+                    </a>
+                </h1>
+                @if(Session::has('success'))
+                    <div class="row">
+                        <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
+                            <div id="message" class="alert alert-success">
+                                {{ Session::get('success') }}
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                <div class="col-sm-6 col-md-4 col-md-offset-4 col-sm-offset-3">
+                    @if(count($posts) > 0)
+                        <table class="table table-sm" id="datables">
+                            <thead>
+                                <th>#</th>
+                                <th>title</th>
+                                <th>description</th>
+                            </thead>  
+                            <tbody>
+                                @foreach ($posts as $post)
+                                    <tr>
+                                        <td>{{$post['id']}}</td>
+                                        <td>{{$post['title']}}</td>
+                                        <td>{{$post['description']}}</td>
+                                    </tr>    
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
                 </div>
-                <div class="sidebar-module">
-                    <h4>Elsewhere</h4>
-                    <ol class="list-unstyled">
-                        <li><a href="#">GitHub</a></li>
-                        <li><a href="#">Twitter</a></li>
-                        <li><a href="#">Facebook</a></li>
-                    </ol>
-                </div>
-            </aside><!-- /.blog-sidebar -->
-
-        </div><!-- /.row -->
-
-    </main><!-- /.container -->
+            </main>
+        </div>
+    </div>
 @endsection
